@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/待审核文件/
+/项目列表/
