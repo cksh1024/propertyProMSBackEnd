@@ -40,7 +40,7 @@ public class LoginService {
                 map.put("status", 1);
                 String statusType = staffInfoMapper.getStatusType(staff.getStatusId());
                 if ("前台".equals(statusType)) map.put("type", "frontdesk");
-                else if (statusType.endsWith("主管")) map.put("type", "frontdesk");
+                else if (statusType.endsWith("主管")) map.put("type", "manager");
                 else if ("熟手".equals(statusType) || "学徒".equals(statusType)) {
                     map.put("type", "employee");
                     map.put("statusType", statusType);
