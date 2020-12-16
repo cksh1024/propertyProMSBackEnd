@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lclgl.dao.StaffInfoMapper">
+
+    <select id="getStaff" resultType="StaffInfo">
+        select * from staff_info where user_id=#{userId}
+    </select>
+
+    <select id="getStatusType" resultType="String">
+        select status_type from status_level where status_id=#{statusId}
+    </select>
+
+</mapper>
