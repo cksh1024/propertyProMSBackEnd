@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -23,8 +23,8 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    public Map<String, Object> login(String username, String password) {
-        return loginService.login(username, password);
+    public Map<String, Object> login(String username, String password, HttpSession session) {
+        return loginService.login(username, password, session);
     }
 
 }

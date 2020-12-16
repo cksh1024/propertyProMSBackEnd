@@ -7,6 +7,7 @@ import com.lclgl.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class LoginService {
     @Autowired
     private StaffInfoMapper staffInfoMapper;
 
-    public Map<String, Object> login(String username, String password) {
+    public Map<String, Object> login(String username, String password, HttpSession session) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("status", -1);
 
@@ -39,14 +40,20 @@ public class LoginService {
                 map.put("msg", "登陆成功！");
                 map.put("status", 1);
                 String statusType = staffInfoMapper.getStatusType(staff.getStatusId());
-                if ("前台".equals(statusType)) map.put("type", "frontdesk");
-                else if (statusType.endsWith("主管")) map.put("type", "manager");
-                else if ("熟手".equals(statusType) || "学徒".equals(statusType)) {
+                if ("前台".equals(statusType)) {
+                    map.put("type", "frontdesk");
+                    map.put("statusType", statusType);
+                } else if (statusType.endsWith("主管")) {
+                    map.put("type", "manager");
+                    map.put("statusType", statusType);
+                } else if ("熟手".equals(statusType) || "学徒".equals(statusType)) {
                     map.put("type", "employee");
                     map.put("statusType", statusType);
+                } else if ("管理员".equals(statusType)) {
+                    map.put("type", "manager");
+                    map.put("statusType", statusType);
                 }
-                else if ("管理员".equals(statusType)) map.put("type", "manager");
-
+                session.setAttribute("staffId", username);
             }
         }
 
