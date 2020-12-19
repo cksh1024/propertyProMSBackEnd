@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,23 +24,44 @@ public class AuditService {
     private AuditMapper auditMapper;
     @Autowired
     private ProInfoMapper proInfoMapper;
+    @Autowired
+    private StaffService staffService;
+    @Autowired
+    private FileService fileService;
 
     public Map<String, Object> processAudit(int auditPerson, int auditId, String proName, int staffId, String auditFile, String operation) {
         HashMap<String, Object> map = new HashMap<>();
 
         HashMap<String, Object> updateInfo = new HashMap<>();
-        map.put("auditId", auditId);
+        updateInfo.put("auditId", auditId);
         String auditStatus = null;
+        String type = staffService.getStaffType(staffId);
         if ("pass".equals(operation)) {
             auditStatus = "审核通过";
-
+            File file = new File("项目列表/" + proName + "/" + type);
+            if (!file.exists()) file.mkdirs();
+            String oldPath = "待审核文件/" + proName + "/" + type + "/" + auditFile;
+            String newPath = "项目列表/" + proName + "/" + type + "/" + auditFile;
+            fileService.moveFile(oldPath, newPath);
         } else if ("acceptAudit".equals(operation)) {
             auditStatus = "审核中";
         } else if ("reject".equals(operation)) {
             auditStatus = "审核未通过";
+            File file = new File("回收站/" + proName + "/" + type);
+            if (!file.exists()) file.mkdirs();
+            String oldPath = "待审核文件/" + proName + "/" + type + "/" + auditFile;
+            String newPath = "回收站/" + proName + "/" + type + "/" + auditFile;
+            fileService.moveFile(oldPath, newPath);
         }
-        map.put("auditStatus", auditStatus);
-        int updateAuditStatus = auditMapper.updateAuditStatus(map);
+        updateInfo.put("auditStatus", auditStatus);
+        int updateAuditStatus = auditMapper.updateAuditStatus(updateInfo);
+
+        if (updateAuditStatus != -1) {
+            map.put("status", 1);
+            map.put("msg", "修改成功！");
+        } else {
+            map.put("status", -1);
+        }
 
         return map;
     }
