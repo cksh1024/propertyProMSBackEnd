@@ -1,12 +1,15 @@
 package com.lclgl.controller;
 
+import com.google.gson.Gson;
 import com.lclgl.dao.LoginMapper;
 import com.lclgl.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -14,7 +17,6 @@ import java.util.Map;
  * @author cksh
  * @create 2020-12-15 17:31
  */
-
 @RestController
 @RequestMapping("/lclgl")
 public class LoginController {

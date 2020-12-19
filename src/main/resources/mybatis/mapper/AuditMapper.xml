@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lclgl.dao.AuditMapper">
+
+    <select id="getStaff" resultType="StaffInfo">
+        select * from staff_info where user_id=#{staffId}
+    </select>
+    <select id="getPro" resultType="ProInfo">
+        select * from pro_info where pro_id=#{proId}
+    </select>
+    <resultMap id="auditMap" type="AuditInfo">
+        <association property="staffInfo" column="staff_id" javaType="StaffInfo" select="getStaff"/>
+        <association property="pro" column="pro_id" javaType="ProInfo" select="getPro"/>
+    </resultMap>
+    <select id="getAuditInfo" resultMap="auditMap">
+        select * from audit_info where staff_id=#{staffId}
+    </select>
+
+    <select id="getUnfinishedAuditInfo" resultMap="auditMap">
+        select * from audit_info where staff_id=#{staffId} and (audit_status='待审核' or audit_status='审核中')
+    </select>
+
+    <insert id="addAuditInfo" parameterType="AuditInfo">
+        insert into audit_info(staff_id, commit_date, audit_file, audit_status, pro_id)
+        values(#{staffInfo.userId}, #{commitDate}, #{auditFile}, #{auditStatus}, #{pro.proId})
+    </insert>
+
+    <select id="getUnfinishedProIds" resultType="int">
+        select pro_id from pro_stage
+        where team_id=(select team_id from staff_info where user_id=#{staffId})
+    </select>
+
+    <select id="getProById" resultType="ProInfo">
+        select * from pro_info where pro_id=#{proId}
+    </select>
+
+    <update id="updateAuditStatus">
+        update audit_info set audit_status=#{auditStatus} where audit_id=#{auditId}
+    </update>
+
+</mapper>

@@ -12,4 +12,13 @@
         select status_type from status_level where status_id=#{statusId}
     </select>
 
+    <select id="getManagerByTeam" resultType="StaffInfo">
+        select * from staff_info where team_id=#{teamId} and status_id!=106 and status_id!=107
+    </select>
+    
+    <select id="getTeamMembers" resultType="StaffInfo">
+        select * from staff_Info
+        where user_id!=#{staffId} and team_id=#{teamId}
+    </select>
+
 </mapper>

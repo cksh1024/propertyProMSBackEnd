@@ -53,12 +53,9 @@ public class LoginService {
                     map.put("type", "manager");
                     map.put("statusType", statusType);
                 }
-                session.setAttribute("staffId", username);
+                session.setAttribute("staffId", Integer.parseInt(username));
             }
         }
-
-
-
         return map;
     }
 

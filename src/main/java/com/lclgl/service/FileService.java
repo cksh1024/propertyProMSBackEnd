@@ -1,15 +1,21 @@
 package com.lclgl.service;
 
+import com.lclgl.dao.AuditMapper;
+import com.lclgl.dao.ProInfoMapper;
+import com.lclgl.dao.StaffInfoMapper;
+import com.lclgl.pojo.AuditInfo;
+import com.lclgl.pojo.ProInfo;
+import com.lclgl.pojo.StaffInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.util.*;
 
 /**
  * @author cksh
@@ -18,8 +24,18 @@ import java.util.Map;
 @Service
 public class FileService {
     private String rootPath = "项目列表";
+    @Autowired
+    private StaffInfoMapper staffInfoMapper;
+    @Autowired
+    private ProInfoMapper proInfoMapper;
+    @Autowired
+    private AuditMapper auditMapper;
+    @Autowired
+    private StaffService staffService;
 
     public Map<String, Object> fileList(String path) throws IOException {
+        File rootDir = new File(rootPath);
+        if (!rootDir.exists()) rootDir.mkdir();
         HashMap<String, Object> map = new HashMap<>();
         String realPath = path == null ? rootPath : rootPath + File.separator + path;
         File file = new File(realPath);
@@ -38,7 +54,7 @@ public class FileService {
         return map;
     }
 
-    public Map<String, Object> downLoad(String fileName, String filePath, HttpServletResponse response) throws UnsupportedEncodingException {
+    public Map<String, Object> download(String fileName, String filePath, HttpServletResponse response) throws UnsupportedEncodingException {
         HashMap<String, Object> map = new HashMap<>();
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "utf-8"));
@@ -82,7 +98,7 @@ public class FileService {
         return map;
     }
 
-    public Map<String, Object> upload(MultipartFile file, String filePath) {
+    public Map<String, Object> upload(MultipartFile file, String filePath, String commitWay, int proId, int staffId) {
         HashMap<String, Object> map = new HashMap<>();
 
         if (file == null || file.isEmpty()) {
@@ -99,6 +115,12 @@ public class FileService {
         try {
             file.transferTo(fileUpload);
             map.put("msg", "上传文件到服务器成功！");
+            if ("audit".equals(commitWay)) {
+                StaffInfo staff = staffInfoMapper.getStaff(staffId);
+                ProInfo pro = proInfoMapper.getProById(proId);
+                AuditInfo auditInfo = new AuditInfo(0, staff, new Date(), file.getOriginalFilename(), "待审核", pro);
+                int i = auditMapper.addAuditInfo(auditInfo);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             map.put("msg", "上传文件到服务器失败！");
@@ -165,6 +187,16 @@ public class FileService {
         }
 
         return map;
+    }
+
+    public String getSavePath(String commitWay, int proId, int staffId) {
+        String path = "";
+        String staffType = staffService.getStaffType(staffId);
+        ProInfo pro = proInfoMapper.getProById(proId);
+        if ("暂无工作类型".equals(staffType)) path = "回收站/";
+        else if ("audit".equals(commitWay)) path = "待审核文件/" + pro.getProName() + "/" + staffType + "/";
+        else if ("submit".equals(commitWay)) path = "项目列表/" + pro.getProName() + "/" + staffType + "/";
+        return new File(path).getAbsolutePath();
     }
 
 }
