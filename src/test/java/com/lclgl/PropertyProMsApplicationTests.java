@@ -42,7 +42,10 @@ class PropertyProMsApplicationTests {
 
     @Test
     public void fileTest() {
-        System.out.println(new File(""));
+//        System.out.println(new File(""));
+        String oldPath = "待审核文件\\上海汤臣一品\\模型\\1. 《企业级软件系统开发实践》任务书及评分标准.docx";
+        String newPath = "项目列表\\上海汤臣一品\\模型\\1. 《企业级软件系统开发实践》任务书及评分标准.docx";
+        fileService.moveFile(oldPath, newPath);
     }
 
 }
