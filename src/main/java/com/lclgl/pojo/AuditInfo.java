@@ -29,4 +29,6 @@ public class AuditInfo {
 
     private ProInfo pro;
 
+    private String suggestion;
+
 }

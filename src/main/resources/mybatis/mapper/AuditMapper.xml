@@ -23,8 +23,8 @@
     </select>
 
     <insert id="addAuditInfo" parameterType="AuditInfo">
-        insert into audit_info(staff_id, commit_date, audit_file, audit_status, pro_id)
-        values(#{staffInfo.userId}, #{commitDate}, #{auditFile}, #{auditStatus}, #{pro.proId})
+        insert into audit_info(staff_id, commit_date, audit_file, audit_status, pro_id, suggestion)
+        values(#{staffInfo.userId}, #{commitDate}, #{auditFile}, #{auditStatus}, #{pro.proId}, #{suggestion})
     </insert>
 
     <select id="getUnfinishedProIds" resultType="int">
@@ -37,7 +37,7 @@
     </select>
 
     <update id="updateAuditStatus">
-        update audit_info set audit_status=#{auditStatus} where audit_id=#{auditId}
+        update audit_info set audit_status=#{auditStatus}, suggestion=#{suggestion} where audit_id=#{auditId}
     </update>
 
 </mapper>

@@ -29,7 +29,7 @@ public class AuditService {
     @Autowired
     private FileService fileService;
 
-    public Map<String, Object> processAudit(int auditPerson, int auditId, String proName, int staffId, String auditFile, String operation) {
+    public Map<String, Object> processAudit(int auditPerson, int auditId, String proName, int staffId, String auditFile, String operation, String suggestion) {
         HashMap<String, Object> map = new HashMap<>();
 
         HashMap<String, Object> updateInfo = new HashMap<>();
@@ -54,6 +54,7 @@ public class AuditService {
             fileService.moveFile(oldPath, newPath);
         }
         updateInfo.put("auditStatus", auditStatus);
+        updateInfo.put("suggestion", suggestion);
         int updateAuditStatus = auditMapper.updateAuditStatus(updateInfo);
 
         if (updateAuditStatus != -1) {

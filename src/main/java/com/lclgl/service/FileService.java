@@ -118,7 +118,7 @@ public class FileService {
             if ("audit".equals(commitWay)) {
                 StaffInfo staff = staffInfoMapper.getStaff(staffId);
                 ProInfo pro = proInfoMapper.getProById(proId);
-                AuditInfo auditInfo = new AuditInfo(0, staff, new Date(), file.getOriginalFilename(), "待审核", pro);
+                AuditInfo auditInfo = new AuditInfo(0, staff, new Date(), file.getOriginalFilename(), "待审核", pro, null);
                 int i = auditMapper.addAuditInfo(auditInfo);
             }
         } catch (IOException e) {

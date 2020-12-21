@@ -46,7 +46,8 @@ public class AuditController {
                                             String proName,
                                             String staffId,
                                             String auditFile,
-                                            String operation) {
+                                            String operation,
+                                            String suggestion) {
 
         if (session.getAttribute("staffId") == null) {
             HashMap<String, Object> map = new HashMap<>();
@@ -57,7 +58,8 @@ public class AuditController {
                 Integer.parseInt(auditId),
                 proName,
                 Integer.parseInt(staffId),
-                auditFile, operation);
+                auditFile, operation,
+                suggestion);
 
     }
 
