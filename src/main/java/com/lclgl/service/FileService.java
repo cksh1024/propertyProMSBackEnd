@@ -32,20 +32,28 @@ public class FileService {
     private AuditMapper auditMapper;
     @Autowired
     private StaffService staffService;
+    @Autowired
+    private ProService proService;
 
-    public Map<String, Object> fileList(String path) throws IOException {
+    public Map<String, Object> fileList(String path, int staffId) throws IOException {
         File rootDir = new File(rootPath);
         if (!rootDir.exists()) rootDir.mkdir();
         HashMap<String, Object> map = new HashMap<>();
         String realPath = path == null ? rootPath : rootPath + File.separator + path;
         File file = new File(realPath);
+        List<String> proNames = null;
+        if ("项目列表\\".equals(realPath)) proNames = proService.getPronamesByStaff(staffId);
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             ArrayList<String> dirs = new ArrayList<>();
             ArrayList<String> fs = new ArrayList<>();
             for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory()) dirs.add(files[i].getPath());
-                else fs.add(files[i].getPath());
+                if (files[i].isDirectory()) {
+                    if (proNames == null) dirs.add(files[i].getPath());
+                    else if (proNames.contains(files[i].getName())) dirs.add(files[i].getPath());
+                } else if (files[i].isFile()) {
+                    fs.add(files[i].getPath());
+                }
             }
             map.put("files", fs);
             map.put("directorys", dirs);

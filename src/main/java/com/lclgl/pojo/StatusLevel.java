@@ -19,6 +19,6 @@ public class StatusLevel {
 
     private String statusType;
 
-    private BigDecimal statusSalary;
+    private double statusSalary;
 
 }

@@ -50,7 +50,7 @@ public class LoginService {
                     map.put("type", "employee");
                     map.put("statusType", statusType);
                 } else if ("管理员".equals(statusType)) {
-                    map.put("type", "manager");
+                    map.put("type", "superUser");
                     map.put("statusType", statusType);
                 }
                 session.setAttribute("staffId", Integer.parseInt(username));

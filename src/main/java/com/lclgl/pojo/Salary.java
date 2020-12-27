@@ -24,14 +24,14 @@ public class Salary {
 
     private int salaryDays;
 
-    private BigDecimal salaryBonus;
+    private double salaryBonus;
 
-    private BigDecimal salaryAll;
+    private double salaryAll;
 
-    private BigDecimal salaryTax;
+    private double salaryTax;
 
-    private BigDecimal salaryPersonal;
+    private double salaryPersonal;
 
-    private BigDecimal salaryPractical;
+    private double salaryPractical;
 
 }

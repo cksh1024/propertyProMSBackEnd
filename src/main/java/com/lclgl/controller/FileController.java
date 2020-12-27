@@ -33,7 +33,7 @@ public class FileController {
             map.put("msg", "你没有权限！");
             return map;
         }
-        return fileService.fileList(path);
+        return fileService.fileList(path, (int) session.getAttribute("staffId"));
     }
 
     @GetMapping("/download")
@@ -50,7 +50,7 @@ public class FileController {
     public void download(@PathVariable("fileName") String fileName,
                          @PathVariable("auditStatus") String auditStatus,
                          @PathVariable("staffId") String staffId,
-                         @PathVariable("proId") String proId,
+                         @PathVariable("pr4oId") String proId,
                          HttpServletResponse response,
                          HttpSession session) throws UnsupportedEncodingException {
         if (session.getAttribute("staffId") == null) {

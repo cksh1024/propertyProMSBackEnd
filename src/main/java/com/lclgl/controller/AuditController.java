@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +24,11 @@ public class AuditController {
     @PostMapping("/getAuditInfo")
     public Map<String, Object> getAuditInfo(HttpSession session) {
         Object staffId = session.getAttribute("staffId");
+        if (staffId == null) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("msg", "你没有权限！");
+            return map;
+        }
         return auditService.getAuditInfo(staffId);
     }
 
