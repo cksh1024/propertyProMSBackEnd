@@ -1,6 +1,7 @@
 package com.lclgl.dao;
 
 import com.lclgl.pojo.StaffInfo;
+import com.lclgl.pojo.StatusLevel;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -22,5 +23,11 @@ public interface StaffInfoMapper {
     public List<StaffInfo> getManagerByTeam(int teamId);
 
     public List<StaffInfo> getTeamMembers(Map<String, Object> map);
+
+    public List<StaffInfo> getStaffs();
+
+    public int addStaff(StaffInfo staffInfo);
+
+    public int modifyStaff(StaffInfo staffInfo);
 
 }

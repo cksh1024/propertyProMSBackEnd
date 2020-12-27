@@ -17,6 +17,8 @@ public class Customer {
 
     private String cusName;
 
+    private String cusSex;
+
     private String cusCompany;
 
     private String cusLevel;
