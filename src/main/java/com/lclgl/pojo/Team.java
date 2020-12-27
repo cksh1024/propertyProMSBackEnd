@@ -17,4 +17,6 @@ public class Team {
 
     private String teamType;
 
+    private String teamName;
+
 }

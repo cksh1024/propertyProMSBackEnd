@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lclgl.dao.TeamMapper">
+    <select id="getTeamNamebyId" resultType="String">
+        select team_name from team where team_id=#{teamId}
+    </select>
+
+    <select id="getTeamTypebyId" resultType="String">
+        select team_type from team where team_id=#{teamId}
+    </select>
+</mapper>

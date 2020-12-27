@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lclgl.dao.ProStageMapper">
+    <select id="SwitchproStage">
+        update pro_stage set stage_endtime=#{stageEndtime},stage_condition=#{stageCondition} where pro_id=#{proId} and stage_type=#{stageType}
+    </select>
+    <select id="AddNewProStage">
+        insert into pro_stage values (#{stageType},#{teamId},#{proId},#{stageStatime},#{stageEndtime},#{stageCondition},#{stagePay})
+    </select>
+    <select id="getProstages" resultType="ProStage">
+        select * from pro_stage where team_id=#{teamId} and stage_condition=#{stageCondition}
+    </select>
+    <select id="DeleteStage">
+        delete from pro_stage where pro_id=#{proId} and stage_type=#{stageType}
+    </select>
+
+</mapper>

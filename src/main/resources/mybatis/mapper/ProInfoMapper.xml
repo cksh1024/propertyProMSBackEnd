@@ -8,4 +8,43 @@
         select * from pro_info where pro_id=#{proId}
     </select>
 
+    <select id="CreateProject">
+        insert into pro_info (pro_name,cus_id,pro_create,pro_condition,pro_endtime,pro_modelmanagerid,pro_xrmanagerid,pro_aemanagerid) values(#{proName},#{cusId},#{proCreate},#{proCondition},#{proEndtime},#{proModelmanagerId},#{proXRmanagerId},#{proAEmanagerId})
+    </select>
+
+    <select id="SwitchProstage">
+        update pro_info set pro_condition=#{proCondition},
+         <if test="xrmanagerId!=null">
+             pro_xrmanagerid=#{xrmanagerId}
+         </if>
+         <if test="aemanagerId!=null">
+             pro_aemanagerid=#{aemanagerId}
+         </if>
+         where pro_id=#{proId}
+    </select>
+
+    <select id="getproIdbymanager" resultType="ProInfo">
+        select * from pro_info
+        <where>
+            <if test="modelId!=null">
+                pro_modelmanagerid=#{modelId}
+            </if>
+            <if test="xrId!=null">
+                pro_xrmanagerid=#{xrId}
+            </if>
+            <if test="aeId!=null">
+                pro_aemanagerid=#{aeId}
+            </if>
+        </where>
+         order by pro_id DESC LIMIT 1
+    </select>
+
+    <select id="CompletePro">
+        update pro_info set pro_condition=#{proCondition},pro_endtime=#{proEndtime} where pro_id=#{proId}
+    </select>
+
+    <select id="proBack">
+        update pro_info set pro_condition=#{proCondition},pro_endtime=#{proEndtime},pro_xrmanagerid=#{proXRmanagerId},pro_aemanagerid=#{proAEmanagerId} where pro_id=#{proId}
+    </select>
+
 </mapper>
