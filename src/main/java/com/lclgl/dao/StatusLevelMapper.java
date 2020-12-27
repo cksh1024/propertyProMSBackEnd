@@ -6,10 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * @author cksh
- * @create 2020-12-25 23:10
- */
 @Mapper
 @Repository
 public interface StatusLevelMapper {

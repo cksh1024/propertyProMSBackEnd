@@ -27,17 +27,19 @@ class PropertyProMsApplicationTests {
     void contextLoads() {
 //        System.out.println(fileService.delete("待审核文件"));
 //        fileService.moveFile("待审核文件\\模型\\作业一.doc", "xxx宾馆设计\\作业一.doc");
-        List<AuditInfo> auditInfo = auditMapper.getAuditInfo(2020302);
+//        List<AuditInfo> auditInfo = auditMapper.getAuditInfo(2020302);
 //        System.out.println(auditInfo);
         DateFormat df2 = DateFormat.getDateTimeInstance();
-        System.out.println(df2.format(auditInfo.get(0).getCommitDate()));
-        System.out.println(df2.format(new Date()));
+//        System.out.println(df2.format(auditInfo.get(0).getCommitDate()));
+//        System.out.println(df2.format(new Date()));
 //        StaffInfo staffInfo = new StaffInfo();
 //        staffInfo.setUserId(2020302);
 //        ProInfo proInfo = new ProInfo();
 //        proInfo.setProId(10001);
 //        AuditInfo auditInfo = new AuditInfo(staffInfo, new Date(), "2.txt", "审核中", proInfo);
 //        auditMapper.addAuditInfo(auditInfo);
+//        Date date = new Date(2000-1900, 3-1, 9);
+//        System.out.println(df2.format(date));
     }
 
     @Test

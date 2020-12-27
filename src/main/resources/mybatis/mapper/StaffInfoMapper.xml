@@ -21,4 +21,27 @@
         where user_id!=#{staffId} and team_id=#{teamId}
     </select>
 
+    <select id="getStaffs" resultType="StaffInfo">
+        select * from staff_info
+    </select>
+
+    <insert id="addStaff" parameterType="StaffInfo">
+        insert into
+        staff_info(staff_name,staff_sex,staff_phone,staff_qq,staff_email,staff_edu,staff_idnum,staff_naplace,
+        staff_nation,staff_birplace,staff_residence,staff_job,staff_birthday,staff_age,status_id,staff_pic)
+        values(#{staffName},#{staffSex},#{staffPhone},#{staffQq},#{staffEmail},#{staffEdu},
+        #{staffIdnum},#{staffNaplace},#{staffNation},#{staffBirplace},#{staffResidence},
+        #{staffJob},#{staffBirthday},#{staffAge},#{statusId},#{staffPic})
+    </insert>
+
+    <update id="modifyStaff" parameterType="StaffInfo">
+        update staff_info
+        set staff_name=#{staffName},staff_sex=#{staffSex},staff_phone=#{staffPhone},staff_qq=#{staffQq},
+        staff_email=#{staffEmail},staff_edu=#{staffEdu},staff_idnum=#{staffIdnum},
+        staff_naplace=#{staffNaplace},staff_nation=#{staffNation},staff_birplace=#{staffBirplace},
+        staff_residence=#{staffResidence},staff_job=#{staffJob},staff_birthday=#{staffBirthday},
+        staff_age=#{staffAge},status_id=#{statusId},staff_pic=#{staffPic}
+        where user_id=#{userId}
+    </update>
+
 </mapper>
