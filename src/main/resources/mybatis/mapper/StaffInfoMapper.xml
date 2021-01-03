@@ -71,4 +71,17 @@
     <select id="deleteteamworkers">
         update staff_info set team_id=null where user_id=#{userId}
     </select>
+
+    <select id="staffModify">
+        update staff_info set staff_phone=#{staffPhone},staff_qq=#{staffQQ},staff_email=#{staffEmail} where user_id=#{userId}
+    </select>
+
+    <select id="getcurrentProNumById" resultType="int">
+        select count(*) from pro_stage where team_id=#{teamId} and stage_condition='未完成'
+    </select>
+
+    <select id="getfinishedProNumById" resultType="int">
+        select count(*) from pro_stage where team_id=#{teamId} and stage_condition='已完成'
+    </select>
+
 </mapper>

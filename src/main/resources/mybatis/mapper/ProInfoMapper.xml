@@ -52,4 +52,9 @@
         update pro_info set pro_condition=#{proCondition},pro_endtime=#{proEndtime},pro_xrmanagerid=#{proXRmanagerId},pro_aemanagerid=#{proAEmanagerId} where pro_id=#{proId}
     </select>
 
+    <select id="getFinishedPro" resultType="ProInfo">
+        select * from pro_info
+        where pro_id in (select pro_id from pro_stage where team_id=#{teamId}) and pro_condition ='已完成'
+   </select>
+
 </mapper>

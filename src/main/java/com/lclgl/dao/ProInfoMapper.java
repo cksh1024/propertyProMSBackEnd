@@ -25,4 +25,7 @@ public interface ProInfoMapper {
 
     public void proBack(Map<String,Object> map);
 
+    public List<ProInfo> getFinishedPro(int teamId);
+
+
 }

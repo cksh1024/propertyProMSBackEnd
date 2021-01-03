@@ -28,4 +28,9 @@
         insert into customer(cus_name,cus_sex,cus_company,cus_level,cus_phone,cus_email)
         values(#{cusName},#{cusSex},#{cusCompany},#{cusLevel},#{cusPhone},#{cusEmail})
     </insert>
+
+    <select id="getCustomerByCustomerId" resultType="Customer">
+        select * from customer where cus_id=#{customerId}
+    </select>
+
 </mapper>

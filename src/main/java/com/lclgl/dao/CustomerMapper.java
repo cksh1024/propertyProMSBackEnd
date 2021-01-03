@@ -20,4 +20,6 @@ public interface CustomerMapper {
     public int delCustomer(int cusId);
 
     public int addCustomer(Customer customer);
+
+    public Customer getCustomerByCustomerId(int customerId);
 }
