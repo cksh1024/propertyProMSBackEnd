@@ -30,4 +30,10 @@ public class ProInfo {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date proEndtime;
 
+    private int proModelmanagerId;
+
+    private int proXRmanagerId;
+
+    private int proAEmanagerId;
+
 }

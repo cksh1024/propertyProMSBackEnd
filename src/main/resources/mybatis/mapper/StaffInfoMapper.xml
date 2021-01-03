@@ -44,4 +44,31 @@
         where user_id=#{userId}
     </update>
 
+    <select id="StaffInfoList" resultType="StaffInfo">
+        select * from staff_Info where ( status_id=106 or status_id=107 ) and team_id is null
+    </select>
+
+    <select id="showTeamWorkers" resultType="StaffInfo">
+        select * from staff_Info where ( status_id=106 or status_id=107 ) and team_id =#{teamId}
+    </select>
+
+    <select id="getStatusId" resultType="int">
+        select status_id from staff_info where user_id=#{userId}
+    </select>
+
+    <select id="ManagerInfoList" resultType="StaffInfo">
+        select * from staff_info where status_id=#{statusId}
+    </select>
+
+    <select id="AddTeamWorker">
+        update staff_info set team_id=#{teamId} where user_id=#{userId}
+    </select>
+
+    <select id="getTeamIdbyId" resultType="int">
+        select team_id from staff_info where user_id=#{userId}
+    </select>
+
+    <select id="deleteteamworkers">
+        update staff_info set team_id=null where user_id=#{userId}
+    </select>
 </mapper>

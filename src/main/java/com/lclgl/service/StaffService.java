@@ -2,6 +2,7 @@ package com.lclgl.service;
 
 import com.lclgl.dao.AuditMapper;
 import com.lclgl.dao.StaffInfoMapper;
+import com.lclgl.dao.TeamMapper;
 import com.lclgl.pojo.AuditInfo;
 import com.lclgl.pojo.StaffInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,88 @@ public class StaffService {
     @Autowired
     private AuditMapper auditMapper;
 
+    @Autowired
+    private TeamMapper teamMapper;
+
+    public List<Map<String,Object>> StaffInfoList(){
+
+        List<StaffInfo> staffInfos=new ArrayList<>();
+        staffInfos.addAll(staffInfoMapper.StaffInfoList());
+        List<Map<String,Object>> staffInfos1=new ArrayList<>();
+        for (int i=0;i<staffInfos.size();i++){
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("userId",staffInfos.get(i).getUserId());
+            map.put("staffName",staffInfos.get(i).getStaffName());
+            map.put("staffSex",staffInfos.get(i).getStaffSex());
+            map.put("statusName",staffInfoMapper.getStatusType(staffInfos.get(i).getStatusId()));
+            staffInfos1.add(map);
+        }
+        return staffInfos1;
+    }
+
+    public Map<String,Object> deleteTeamWorkers(List<StaffInfo> staffInfos){
+        HashMap<String,Object> map=new HashMap<>();
+        if (staffInfos.size()==0){
+            map.put("msg","请先选择员工");
+            return map;
+        }else{
+            for (int i=0;i<staffInfos.size();i++){
+                staffInfoMapper.deleteteamworkers(staffInfos.get(i).getUserId());
+            }
+            map.put("msg","删除成功");
+            return map;
+        }
+    }
+
+    public List<Map<String,Object>> TeamWorkers(int userId){
+        List<StaffInfo> staffInfos=new ArrayList<>();
+        staffInfos.addAll(staffInfoMapper.showTeamWorkers(staffInfoMapper.getTeamIdbyId(userId)));
+        List<Map<String,Object>> staffInfos1=new ArrayList<>();
+        for (int i=0;i<staffInfos.size();i++){
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("userId",staffInfos.get(i).getUserId());
+            map.put("staffName",staffInfos.get(i).getStaffName());
+            map.put("staffSex",staffInfos.get(i).getStaffSex());
+            map.put("statusName",staffInfoMapper.getStatusType(staffInfos.get(i).getStatusId()));
+            staffInfos1.add(map);
+        }
+        return staffInfos1;
+    }
+
+    public List<Map<String,Object>> ManagerInfoList(int userId){
+        int statusId=staffInfoMapper.getStatusId(userId);
+        if (statusId!=105){
+            List<StaffInfo> staffInfos =new ArrayList<>();
+            List<Map<String,Object>> staffInfos1=new ArrayList<>();
+            staffInfos.addAll(staffInfoMapper.ManagerInfoList(statusId+1));
+            for (int i=0;i<staffInfos.size();i++){
+                HashMap<String,Object> map=new HashMap<>();
+                map.put("managerId",staffInfos.get(i).getUserId());
+                map.put("managerName",staffInfos.get(i).getStaffName());
+                map.put("managerSex",staffInfos.get(i).getStaffSex());
+                map.put("teamName",teamMapper.getTeamNamebyId(staffInfos.get(i).getTeamId()));
+                map.put("teamType",teamMapper.getTeamTypebyId(staffInfos.get(i).getTeamId()));
+                staffInfos1.add(map);
+            }
+            return staffInfos1;
+       }
+        else {
+            System.out.println("项目已完成！不能进行下一步");
+            return null;
+        }
+    }
+
+    public int Staffselect(List<StaffInfo> selectedworkers,int teamId){
+        HashMap<String,Object> map=new HashMap<>();
+        for (int i=0;i<selectedworkers.size();i++){
+            int userId=selectedworkers.get(i).getUserId();
+            map.put("userId",userId);
+            map.put("teamId", teamId);
+            staffInfoMapper.AddTeamWorker(map);
+        }
+        return 0;
+    }
+
     public String getStaffType(int staffId) {
         StaffInfo staff = staffInfoMapper.getStaff(staffId);
         String statusType = staffInfoMapper.getStatusType(staff.getStatusId());
@@ -39,6 +122,17 @@ public class StaffService {
         if ("渲染主管".equals(statusType1)) return "渲染";
         if ("后期主管".equals(statusType1)) return "后期";
         return "暂无工作类型";
+    }
+
+    public int getManagerTeamId(int userId){
+        StaffInfo staffInfo=new StaffInfo();
+        staffInfo=staffInfoMapper.getStaff(userId);
+        if (staffInfo==null){
+            return -1;
+        }
+        else {
+            return staffInfo.getTeamId();
+        }
     }
 
     public List<StaffInfo> getTeamMembers(int staffId) {
