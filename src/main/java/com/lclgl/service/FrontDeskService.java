@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.*;
 
 @Service
 public class FrontDeskService {
@@ -31,7 +32,31 @@ public class FrontDeskService {
     public Map<String, Object> getStaffs() {
         HashMap<String, Object> map = new HashMap<>();
         List<StaffInfo> staffs = staffInfoMapper.getStaffs();
-        map.put("staffs", staffs);
+
+        ArrayList<Map<String, Object>> staffInfos = new ArrayList<>();
+        for (StaffInfo staff : staffs) {
+            HashMap<String, Object> temp = new HashMap<>();
+            temp.put("userId", staff.getUserId());
+            StatusLevel statusLevel = statusLevelMapper.getStatusLevelById(staff.getStatusId());
+            temp.put("statusType", statusLevel.getStatusType());
+            temp.put("staffSex", staff.getStaffSex());
+            temp.put("staffAge", staff.getStaffAge());
+            temp.put("staffName", staff.getStaffName());
+            temp.put("staffPic", staff.getStaffPic());
+            temp.put("staffPhone", staff.getStaffPhone());
+            temp.put("staffQq", staff.getStaffQq());
+            temp.put("staffEmail", staff.getStaffEmail());
+            temp.put("staffIdnum", staff.getStaffIdnum());
+            temp.put("staffNaplace", staff.getStaffNaplace());
+            temp.put("staffNation", staff.getStaffNation());
+            temp.put("staffBirplace", staff.getStaffBirplace());
+            temp.put("staffBirthday", staff.getStaffBirthday());
+            temp.put("staffResidence", staff.getStaffResidence());
+            temp.put("staffEdu", staff.getStaffEdu());
+            temp.put("staffJob", staff.getStaffJob());
+            staffInfos.add(temp);
+        }
+        map.put("staffs", staffInfos);
         return map;
     }
     public Map<String, Object> getStatusLevels() {

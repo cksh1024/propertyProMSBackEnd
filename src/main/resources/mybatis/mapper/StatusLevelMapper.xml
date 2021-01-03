@@ -8,4 +8,8 @@
         select * from status_level
     </select>
 
+    <select id="getStatusLevelById" resultType="StatusLevel">
+        select * from status_level where status_id=#{id}
+    </select>
+
 </mapper>
