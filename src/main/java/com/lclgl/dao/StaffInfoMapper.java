@@ -23,4 +23,10 @@ public interface StaffInfoMapper {
 
     public List<StaffInfo> getTeamMembers(Map<String, Object> map);
 
+    public void staffModify(Map<String,Object> map);
+
+    public int getfinishedProNumById(int teamId);
+
+    public int getcurrentProNumById(int teamId);
+
 }

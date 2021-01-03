@@ -4,8 +4,10 @@ import com.lclgl.dao.AuditMapper;
 import com.lclgl.dao.StaffInfoMapper;
 import com.lclgl.pojo.AuditInfo;
 import com.lclgl.pojo.StaffInfo;
+import org.omg.CosNaming.IstringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.timestamp.TSRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +25,18 @@ public class StaffService {
     private StaffInfoMapper staffInfoMapper;
     @Autowired
     private AuditMapper auditMapper;
+
+    public Map<String, Object> ModifyStaff(Map<String,Object> form) {
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("userId",form);
+        map.put("staffPhone",form);
+        map.put("staffQQ",form);
+        map.put("staffEmail",form);
+        staffInfoMapper.staffModify(map);
+        HashMap<String,Object> map1=new HashMap<>();
+        map1.put("msg","修改成功");
+        return map1;
+    }
 
     public String getStaffType(int staffId) {
         StaffInfo staff = staffInfoMapper.getStaff(staffId);
@@ -70,4 +84,11 @@ public class StaffService {
         return map;
     }
 
+    public Map<String, Object> getProNumById(int staffId) {
+        HashMap map=new HashMap();
+        int teamId=staffInfoMapper.getStaff(staffId).getTeamId();
+        map.put("finishedNum",staffInfoMapper.getfinishedProNumById(teamId));
+        map.put("currentNum",staffInfoMapper.getcurrentProNumById(teamId));
+        return map;
+    }
 }
