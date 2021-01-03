@@ -30,7 +30,7 @@ public class StaffInfo {
 
     private String staffPhone;
 
-    private int staffQq;
+    private String staffQq;
 
     private String staffEmail;
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -55,14 +56,13 @@ public class FrontDeskController {
         staffInfo.setStaffSex(staffSex);
         staffInfo.setStatusId(Integer.parseInt(statusId));
         staffInfo.setStaffPhone(staffPhone);
-        staffInfo.setStaffQq(Integer.parseInt(staffQq));
+        staffInfo.setStaffQq(staffQq);
         staffInfo.setStaffNaplace(staffNaplace);
         staffInfo.setStaffIdnum(staffIdnum);
         staffInfo.setStaffNation(staffNation);
         staffInfo.setStaffResidence(staffResidence);
         staffInfo.setStaffJob(staffJob);
         staffInfo.setUserId(Integer.parseInt(staffId));
-
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentTime = simpleDateFormat.format(new Date());

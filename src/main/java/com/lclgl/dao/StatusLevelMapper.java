@@ -12,4 +12,6 @@ public interface StatusLevelMapper {
 
     public List<StatusLevel> getStatusLevels();
 
+    public StatusLevel getStatusLevelById(int id);
+
 }
