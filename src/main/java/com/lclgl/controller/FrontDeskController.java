@@ -89,7 +89,7 @@ public class FrontDeskController {
     }
 
     @PostMapping("/getCustomers")
-    public Map<String, Object> getCustomer(Customer customer){return frontDeskService.getCustomers(customer);}
+    public Map<String, Object> getCustomer(){return frontDeskService.getCustomers();}
 
     @PostMapping("/getCustomerById")
     public Map<String, Object> getCustomerById(String cusId) {

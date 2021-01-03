@@ -65,7 +65,7 @@ public class FrontDeskService {
         return map;
     }
 
-    public Map<String, Object> getCustomers(Customer customer) {
+    public Map<String, Object> getCustomers() {
         HashMap<String, Object> map = new HashMap<>();
         List<Customer> customers = customerMapper.getCustomers();
         map.put("customers", customers);
