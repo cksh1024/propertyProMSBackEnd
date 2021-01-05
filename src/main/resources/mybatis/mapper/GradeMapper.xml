@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lclgl.dao.GradeMapper">
+
+    <select id="getCurrentGradeById" parameterType="Map" resultType="Grade">
+        select * from grade
+        where grade_time<![CDATA[>=]]>#{startTime} and grade_time<![CDATA[<=]]>#{endTime} and user_id=#{staffId}
+    </select>
+
+    <insert id="addGrade" parameterType="Grade">
+        insert into grade values(#{userId}, #{gradeTime}, #{gradeLevel})
+    </insert>
+
+    <update id="updateGrade" parameterType="Map">
+        update grade set grade_level=#{gradeLevel}
+        where user_id=#{staffId} and grade_time<![CDATA[>=]]>#{startTime} and grade_time<![CDATA[<=]]>#{endTime}
+    </update>
+
+    <select id="getHistoryGrade" resultType="Grade">
+        select * from grade
+    </select>
+
+</mapper>

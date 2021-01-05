@@ -17,4 +17,8 @@ public interface ProStageMapper {
     public List<ProStage> getProstages(Map<String,Object> map);
     public void DeleteStage(Map<String,Object> map);
 
+    public List<ProStage> proStageList();
+
+    public int updateStagePay(Map<String, Object> map);
+
 }

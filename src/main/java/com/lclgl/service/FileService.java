@@ -2,9 +2,11 @@ package com.lclgl.service;
 
 import com.lclgl.dao.AuditMapper;
 import com.lclgl.dao.ProInfoMapper;
+import com.lclgl.dao.ProJournalMapper;
 import com.lclgl.dao.StaffInfoMapper;
 import com.lclgl.pojo.AuditInfo;
 import com.lclgl.pojo.ProInfo;
+import com.lclgl.pojo.ProJournal;
 import com.lclgl.pojo.StaffInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,8 @@ public class FileService {
     private StaffService staffService;
     @Autowired
     private ProService proService;
+    @Autowired
+    private ProJournalMapper proJournalMapper;
 
     public Map<String, Object> fileList(String path, int staffId) throws IOException {
         File rootDir = new File(rootPath);
@@ -62,7 +66,16 @@ public class FileService {
         return map;
     }
 
-    public Map<String, Object> download(String fileName, String filePath, HttpServletResponse response) throws UnsupportedEncodingException {
+    public Map<String, Object> download(String fileName, String filePath, HttpServletResponse response, String remark, int proId, int staffId) throws UnsupportedEncodingException {
+
+        ProJournal proJournal = new ProJournal();
+        proJournal.setFileName(fileName);
+        proJournal.setJourRemark(remark);
+        proJournal.setJourTime(new Date());
+        proJournal.setJourType("下载");
+        proJournal.setProId(proId);
+        proJournal.setUserId(staffId);
+
         HashMap<String, Object> map = new HashMap<>();
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "utf-8"));
@@ -103,10 +116,20 @@ public class FileService {
         }
 
         map.put("result","下载成功！");
+        proJournalMapper.addProJournal(proJournal);
         return map;
     }
 
-    public Map<String, Object> upload(MultipartFile file, String filePath, String commitWay, int proId, int staffId) {
+    public Map<String, Object> upload(MultipartFile file, String filePath, String commitWay, int proId, int staffId, String remark) {
+
+        ProJournal proJournal = new ProJournal();
+        proJournal.setFileName(file.getOriginalFilename());
+        proJournal.setJourRemark(remark);
+        proJournal.setJourTime(new Date());
+        proJournal.setJourType("上传");
+        proJournal.setProId(proId);
+        proJournal.setUserId(staffId);
+
         HashMap<String, Object> map = new HashMap<>();
 
         if (file == null || file.isEmpty()) {
@@ -123,6 +146,7 @@ public class FileService {
         try {
             file.transferTo(fileUpload);
             map.put("msg", "上传文件到服务器成功！");
+            proJournalMapper.addProJournal(proJournal);
             if ("audit".equals(commitWay)) {
                 StaffInfo staff = staffInfoMapper.getStaff(staffId);
                 ProInfo pro = proInfoMapper.getProById(proId);

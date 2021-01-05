@@ -1,6 +1,7 @@
 package com.lclgl.dao;
 
 import com.lclgl.pojo.ProInfo;
+import com.lclgl.pojo.ProStage;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +28,10 @@ public interface ProInfoMapper {
 
     public List<ProInfo> getFinishedPro(int teamId);
 
+    public List<ProInfo> getPros();
+
+    public int getProNameByProId(String proName);
+
+    public List<ProStage> getStagePayOfStaff(Map<String, Object> map);
 
 }

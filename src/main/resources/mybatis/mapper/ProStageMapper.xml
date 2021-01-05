@@ -16,4 +16,12 @@
         delete from pro_stage where pro_id=#{proId} and stage_type=#{stageType}
     </select>
 
+    <select id="proStageList" resultType="ProStage">
+        select * from pro_stage
+    </select>
+
+    <update id="updateStagePay" parameterType="Map">
+        update pro_stage set stage_pay=#{stagePay} where pro_id=#{proId} and stage_type=#{stageType}
+    </update>
+
 </mapper>

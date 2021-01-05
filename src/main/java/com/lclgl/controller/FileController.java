@@ -1,5 +1,6 @@
 package com.lclgl.controller;
 
+import com.lclgl.dao.ProInfoMapper;
 import com.lclgl.service.FileService;
 import com.lclgl.service.ProService;
 import com.lclgl.service.StaffService;
@@ -25,6 +26,8 @@ public class FileController {
     private StaffService staffService;
     @Autowired
     private ProService proService;
+    @Autowired
+    private ProInfoMapper proInfoMapper;
 
     @PostMapping("/getFileList")
     public Map<String, Object> fileList(String path, HttpSession session) throws IOException {
@@ -43,14 +46,17 @@ public class FileController {
             map.put("msg", "你没有权限！");
             return;
         }
-        fileService.download(fileName, filePath, response);
+        String remark = "无";
+        String[] split = filePath.split("/");
+        int proId = proInfoMapper.getProNameByProId(split[1]);
+        fileService.download(fileName, filePath, response, remark, proId, (int) session.getAttribute("staffId"));
     }
 
     @GetMapping("/download/{fileName}/{auditStatus}/{staffId}/{proId}")
     public void download(@PathVariable("fileName") String fileName,
                          @PathVariable("auditStatus") String auditStatus,
                          @PathVariable("staffId") String staffId,
-                         @PathVariable("pr4oId") String proId,
+                         @PathVariable("proId") String proId,
                          HttpServletResponse response,
                          HttpSession session) throws UnsupportedEncodingException {
         if (session.getAttribute("staffId") == null) {
@@ -61,11 +67,19 @@ public class FileController {
         String path = null;
         String staffType = staffService.getStaffType(Integer.parseInt(staffId));
         String proName = proService.getProName(Integer.parseInt(proId));
-        if ("审核通过".equals(auditStatus)) path = "项目列表/" + proName + "/" + staffType + "/";
-        else if ("待审核".equals(auditStatus) || "审核中".equals(auditStatus)) path = "待审核文件/" + proName + "/" + staffType + "/";
-        else path = "回收站/" + proName + "/" + staffType + "/";
+        String remark;
+        if ("审核通过".equals(auditStatus)) {
+            remark = "下载审核通过的文件";
+            path = "项目列表/" + proName + "/" + staffType + "/";
+        } else if ("待审核".equals(auditStatus) || "审核中".equals(auditStatus)) {
+            remark = "下载待审核的文件";
+            path = "待审核文件/" + proName + "/" + staffType + "/";
+        } else {
+            remark = "下载审核失败的文件";
+            path = "回收站/" + proName + "/" + staffType + "/";
+        }
         path += fileName;
-        fileService.download(fileName, path, response);
+        fileService.download(fileName, path, response, remark, Integer.parseInt(proId), (int) session.getAttribute("staffId"));
     }
 
     @PostMapping("/upload/{commitWay}/{proId}")
@@ -76,8 +90,11 @@ public class FileController {
             map.put("msg", "你没有权限！");
             return map;
         }
+        String remark = null;
+        if ("submit".equals(commitWay)) remark = "交给客户";
+        else remark = "提交审核";
         String path = fileService.getSavePath(commitWay, Integer.parseInt(proId), (int) staffId);
-        return fileService.upload(file, path, commitWay, Integer.parseInt(proId), (int) staffId);
+        return fileService.upload(file, path, commitWay, Integer.parseInt(proId), (int) staffId, remark);
     }
 
     @PostMapping("/delFile")

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lclgl.dao.SalaryMapper">
+
+    <select id="getSalarys" resultType="Salary">
+        select * from salary
+    </select>
+
+    <insert id="addSalary" parameterType="Salary">
+        insert into salary(salary_time,user_id,salary_days,salary_bonus,salary_all,salary_tax,salary_personal,salary_practical)
+        values(#{salaryTime},#{userId},#{salaryDays},#{salaryBonus},#{salaryAll},#{salaryTax},#{salaryPersonal},#{salaryPractical})
+    </insert>
+    
+    <update id="updateSalary" parameterType="Salary">
+        update salary
+        set salary_time=#{salaryTime},
+        salary_days=#{salaryDays},
+        salary_bonus=#{salaryBonus},
+        salary_all=#{salaryAll},
+        salary_tax=#{salaryTax},
+        salary_personal=#{salaryPersonal},
+        salary_practical=#{salaryPractical}
+        where user_id=#{userId}
+    </update>
+    
+    <select id="getSalaryByIdAndTime" resultType="Salary" parameterType="Map">
+        select * from salary
+        where user_id=#{userId} and salary_time<![CDATA[>=]]>#{startTime} and salary_time<![CDATA[<=]]>#{endTime};
+    </select>
+
+</mapper>

@@ -50,4 +50,6 @@ public interface StaffInfoMapper {
 
     public int getcurrentProNumById(int teamId);
 
+    public int addTeamToManager(int managerId);
+
 }

@@ -9,24 +9,18 @@ import java.util.Date;
 
 /**
  * @author cksh
- * @create 2020-12-15 23:08
+ * @create 2021-01-04 23:32
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProJournal {
-
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date jourTime;
-
-    private int proId;
-
-    private String jourType;
+public class Grade {
 
     private int userId;
 
-    private String jourRemark;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+    private Date gradeTime;
 
-    private String fileName;
+    private int gradeLevel;
 
 }

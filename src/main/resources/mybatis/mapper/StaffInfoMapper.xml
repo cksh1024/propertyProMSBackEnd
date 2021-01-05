@@ -84,4 +84,10 @@
         select count(*) from pro_stage where team_id=#{teamId} and stage_condition='已完成'
     </select>
 
+    <update id="addTeamToManager">
+        update staff_info
+        set team_id=(select team_id from team order by team_id desc limit 1)
+        where user_id=#{managerId}
+    </update>
+
 </mapper>

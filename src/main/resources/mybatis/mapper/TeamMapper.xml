@@ -10,4 +10,23 @@
     <select id="getTeamTypebyId" resultType="String">
         select team_type from team where team_id=#{teamId}
     </select>
+
+    <select id="getTeamInfos" resultType="Team">
+        select * from team
+    </select>
+
+    <select id="getTeamManagers" resultType="String">
+        select staff_name from staff_info
+        where team_id=#{teamId} and status_id in (select status_id from status_level where status_type like '%主管')
+    </select>
+
+    <insert id="addTeam" parameterType="Team">
+        insert into team(team_type, team_name) values(#{teamType}, #{teamName})
+    </insert>
+
+    <select id="getManagersByTeamType" resultType="StaffInfo" parameterType="String">
+        select * from staff_info
+        where status_id=(select status_id from status_level where status_type=#{type})
+    </select>
+
 </mapper>
