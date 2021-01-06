@@ -153,5 +153,16 @@ public class StaffController {
     public Map<String,Object> showProNum(HttpSession session){
         return staffService.getProNumById((Integer) session.getAttribute("staffId"));
     }
+
+    @PostMapping("/updatePassword")
+    public Map<String, Object> updatePassword(HttpSession session, String newPwd, String oldPwd) {
+        if (session.getAttribute("staffId") == null) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("msg", "你没有权限！");
+            return map;
+        }
+        return staffService.updatePassword(newPwd, oldPwd, (int) session.getAttribute("staffId"));
+    }
+
 }
 

@@ -8,4 +8,12 @@
         select * from user where user_id=#{userId} and password=#{password}
     </select>
 
+    <select id="getUserById" resultType="User">
+        select * from user where user_id=#{staffId}
+    </select>
+
+    <update id="updatePassword" parameterType="Map">
+        update user set password=#{pwd} where user_id=#{staffId}
+    </update>
+
 </mapper>

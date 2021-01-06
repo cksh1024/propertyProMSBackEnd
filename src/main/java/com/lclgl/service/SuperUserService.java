@@ -121,8 +121,10 @@ public class SuperUserService {
                 temp.put("proCondition_number", 1);
             } else if ("渲染中".equals(proInfo.getProCondition())) {
                 temp.put("proCondition_number", 2);
-            } else {
+            } else if ("后期中".equals(proInfo.getProCondition())) {
                 temp.put("proCondition_number", 3);
+            } else {
+                temp.put("proCondition_number", 4);
             }
             temp.put("proEndtime", proInfo.getProEndtime());
             proInfos.add(temp);

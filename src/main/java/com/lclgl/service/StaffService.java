@@ -1,10 +1,12 @@
 package com.lclgl.service;
 
 import com.lclgl.dao.AuditMapper;
+import com.lclgl.dao.LoginMapper;
 import com.lclgl.dao.StaffInfoMapper;
 import com.lclgl.dao.TeamMapper;
 import com.lclgl.pojo.AuditInfo;
 import com.lclgl.pojo.StaffInfo;
+import com.lclgl.pojo.User;
 import org.omg.CosNaming.IstringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,8 @@ public class StaffService {
     private StaffInfoMapper staffInfoMapper;
     @Autowired
     private AuditMapper auditMapper;
-
+    @Autowired
+    private LoginMapper loginMapper;
     @Autowired
     private TeamMapper teamMapper;
 
@@ -172,5 +175,37 @@ public class StaffService {
         map.put("finishedNum",staffInfoMapper.getfinishedProNumById(teamId));
         map.put("currentNum",staffInfoMapper.getcurrentProNumById(teamId));
         return map;
+    }
+
+    public Map<String, Object> updatePassword(String newPwd, String oldPwd, int staffId) {
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        User user = loginMapper.getUserById(staffId);
+
+        if (user == null) {
+            map.put("status", -1);
+            map.put("msg", "你没有权限！");
+        } else if (oldPwd.equals(user.getPassword())) {
+            HashMap<String, Object> info = new HashMap<>();
+            info.put("staffId", staffId);
+            info.put("pwd", newPwd);
+            int r = loginMapper.updatePassword(info);
+            if (r == 1) {
+                map.put("status", 1);
+                map.put("msg", "修改成功！");
+            } else {
+                map.put("status", -1);
+                map.put("msg", "修改失败！");
+            }
+
+        } else {
+            map.put("status", -1);
+            map.put("msg", "原密码输入错误！");
+        }
+
+
+        return map;
+
     }
 }
