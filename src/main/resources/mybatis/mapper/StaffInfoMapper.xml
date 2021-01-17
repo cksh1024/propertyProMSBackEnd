@@ -100,4 +100,12 @@
         select * from grade where user_id=#{userId}
     </select>
 
+    <select id="getstaffNum" resultType="int">
+        select count(*) from staff_info
+    </select>
+
+    <select id="getstaffNumByStatus" resultType="int">
+        select count(*) from staff_info where status_id=#{staffType}
+    </select>
+
 </mapper>

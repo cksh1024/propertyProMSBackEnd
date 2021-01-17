@@ -34,4 +34,8 @@ public interface ProInfoMapper {
 
     public List<ProStage> getStagePayOfStaff(Map<String, Object> map);
 
+    public int getCurrentProjects();
+
+    public int getFinishedProjects();
+
 }

@@ -52,10 +52,13 @@ public interface StaffInfoMapper {
     public int getcurrentProNumById(int teamId);
 
     public int addTeamToManager(int managerId);
-
+    
     public int updateAvatar(Map<String, Object> map);
 
     public List<Grade> getRateDataById(int userId);
 
+    public int getstaffNum();
+
+    public int getstaffNumByStatus(int staffType);
 
 }
