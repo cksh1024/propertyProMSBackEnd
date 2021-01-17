@@ -145,7 +145,7 @@ public class SuperUserService {
             temp.put("stageType", proStage.getStageType());
             temp.put("stageStateTime", proStage.getStageStateTime());
             temp.put("stageCondition", proStage.getStageCondition());
-            temp.put("stateEndtime", proStage.getStageEndtime());
+            temp.put("stageEndtime", proStage.getStageEndtime());
             temp.put("stagePay", proStage.getStagePay());
             proStageInfos.add(temp);
         }
