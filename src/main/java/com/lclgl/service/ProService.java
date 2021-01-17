@@ -95,7 +95,7 @@ public class ProService {
                 map1.put("proId",proId);
                 map1.put("xrmanagerId",selectedManager.get("managerId"));
                 proInfoMapper.SwitchProstage(map1);
-                AddNewStage((Integer) selectedManager.get("managerId"));
+                AddNewStage((Integer) selectedManager.get("managerId"),proId);
                 HashMap<String,Object> map2=new HashMap<>();
                 map2.put("proId",proId);
                 map2.put("stageType","建模阶段");
@@ -111,7 +111,7 @@ public class ProService {
                 map1.put("proId",proId);
                 map1.put("aemanagerId",selectedManager.get("managerId"));
                 proInfoMapper.SwitchProstage(map1);
-                AddNewStage((Integer) selectedManager.get("managerId"));
+                AddNewStage((Integer) selectedManager.get("managerId"),proId);
                 HashMap<String,Object> map2=new HashMap<>();
                 map2.put("proId",proId);
                 map2.put("stageType","渲染阶段");
@@ -274,6 +274,7 @@ public class ProService {
             map.put("stageEndtime",null);
             map.put("stageCondition","未完成");
             map.put("stagePay",0);
+            System.out.println(map);
             proStageMapper.AddNewProStage(map);
         }
         else if("后期主管".equals(staffInfoMapper.getStatusType(staffInfoMapper.getStatusId(userId)))){
@@ -282,6 +283,40 @@ public class ProService {
             map.put("stageType","后期阶段");
             map.put("teamId",staffInfoMapper.getTeamIdbyId(userId));
             map.put("proId",proInfoMapper.getproIdbymanager(map1).getProId());
+            map.put("stageStatime",new Date());
+            map.put("stageEndtime",null);
+            map.put("stageCondition","未完成");
+            map.put("stagePay",0);
+            proStageMapper.AddNewProStage(map);
+        }
+    }
+    public void AddNewStage(int userId,int proId){
+        HashMap<String,Object> map=new HashMap<>();
+        if ("模型主管".equals(staffInfoMapper.getStatusType(staffInfoMapper.getStatusId(userId)))){
+            map.put("stageType","建模阶段");
+            map.put("teamId",staffInfoMapper.getTeamIdbyId(userId));
+            map.put("proId",proId);
+            map.put("stageStatime",new Date());
+            map.put("stageEndtime",null);
+            map.put("stageCondition","未完成");
+            map.put("stagePay",0);
+            proStageMapper.AddNewProStage(map);
+        }
+        else if("渲染主管".equals(staffInfoMapper.getStatusType(staffInfoMapper.getStatusId(userId)))){
+            map.put("stageType","渲染阶段");
+            map.put("teamId",staffInfoMapper.getTeamIdbyId(userId));
+            map.put("proId",proId);
+            map.put("stageStatime",new Date());
+            map.put("stageEndtime",null);
+            map.put("stageCondition","未完成");
+            map.put("stagePay",0);
+            System.out.println(map);
+            proStageMapper.AddNewProStage(map);
+        }
+        else if("后期主管".equals(staffInfoMapper.getStatusType(staffInfoMapper.getStatusId(userId)))){
+            map.put("stageType","后期阶段");
+            map.put("teamId",staffInfoMapper.getTeamIdbyId(userId));
+            map.put("proId",proId);
             map.put("stageStatime",new Date());
             map.put("stageEndtime",null);
             map.put("stageCondition","未完成");

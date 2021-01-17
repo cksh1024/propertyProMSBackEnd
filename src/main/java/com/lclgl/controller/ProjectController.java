@@ -33,6 +33,7 @@ public class ProjectController {
             Object value = jsonObject.get(key);
             map.put(key, value);
         }
+        System.out.println(proId);
         return proService.SwitchproStage(map,proId, (Integer) session.getAttribute("staffId"));
     }
 

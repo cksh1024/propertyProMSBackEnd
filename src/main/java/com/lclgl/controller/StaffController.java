@@ -153,5 +153,15 @@ public class StaffController {
     public Map<String,Object> showProNum(HttpSession session){
         return staffService.getProNumById((Integer) session.getAttribute("staffId"));
     }
+
+    @PostMapping("/getRateData")
+    public Map<String,Object> getRateDataById(HttpSession session){
+        return staffService.getRateDataById((Integer) session.getAttribute("staffId"));
+    }
+
+    @PostMapping("/getSalaryData")
+    public Map<String,Object> getSalaryDataById(HttpSession session){
+        return staffService.getSalaryDataById((Integer) session.getAttribute("staffId"));
+    }
 }
 

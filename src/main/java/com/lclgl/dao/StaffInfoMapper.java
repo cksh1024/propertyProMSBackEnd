@@ -1,5 +1,6 @@
 package com.lclgl.dao;
 
+import com.lclgl.pojo.Grade;
 import com.lclgl.pojo.StaffInfo;
 import com.lclgl.pojo.StatusLevel;
 import org.apache.ibatis.annotations.Mapper;
@@ -51,5 +52,7 @@ public interface StaffInfoMapper {
     public int getcurrentProNumById(int teamId);
 
     public int addTeamToManager(int managerId);
+
+    public List<Grade> getRateDataById(int userId);
 
 }

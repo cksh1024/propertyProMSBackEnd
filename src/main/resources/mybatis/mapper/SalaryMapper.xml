@@ -30,4 +30,8 @@
         where user_id=#{userId} and salary_time<![CDATA[>=]]>#{startTime} and salary_time<![CDATA[<=]]>#{endTime};
     </select>
 
+    <select id="getSalaryById" resultType="Salary">
+        select * from salary where user_id=#{userId}
+    </select>
+
 </mapper>
