@@ -43,15 +43,19 @@ public class LoginService {
                 if ("前台".equals(statusType)) {
                     map.put("type", "frontdesk");
                     map.put("statusType", statusType);
+                    map.put("avatar", staff.getStaffPic());
                 } else if (statusType.endsWith("主管")) {
                     map.put("type", "manager");
                     map.put("statusType", statusType);
+                    map.put("avatar", staff.getStaffPic());
                 } else if ("熟手".equals(statusType) || "学徒".equals(statusType)) {
                     map.put("type", "employee");
                     map.put("statusType", statusType);
+                    map.put("avatar", staff.getStaffPic());
                 } else if ("管理员".equals(statusType)) {
                     map.put("type", "superUser");
                     map.put("statusType", statusType);
+                    map.put("avatar", staff.getStaffPic());
                 }
                 session.setAttribute("staffId", Integer.parseInt(username));
             }

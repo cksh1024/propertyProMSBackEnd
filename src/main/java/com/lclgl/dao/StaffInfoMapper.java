@@ -52,4 +52,6 @@ public interface StaffInfoMapper {
 
     public int addTeamToManager(int managerId);
 
+    public int updateAvatar(Map<String, Object> map);
+
 }

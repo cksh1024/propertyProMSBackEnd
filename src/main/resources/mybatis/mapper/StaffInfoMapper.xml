@@ -40,7 +40,7 @@
         staff_email=#{staffEmail},staff_edu=#{staffEdu},staff_idnum=#{staffIdnum},
         staff_naplace=#{staffNaplace},staff_nation=#{staffNation},staff_birplace=#{staffBirplace},
         staff_residence=#{staffResidence},staff_job=#{staffJob},staff_birthday=#{staffBirthday},
-        staff_age=#{staffAge},status_id=#{statusId},staff_pic=#{staffPic}
+        staff_age=#{staffAge},status_id=#{statusId}
         where user_id=#{userId}
     </update>
 
@@ -88,6 +88,12 @@
         update staff_info
         set team_id=(select team_id from team order by team_id desc limit 1)
         where user_id=#{managerId}
+    </update>
+
+    <update id="updateAvatar" parameterType="Map">
+        update staff_info
+        set staff_pic=#{avatar}
+        where user_id=#{staffId}
     </update>
 
 </mapper>

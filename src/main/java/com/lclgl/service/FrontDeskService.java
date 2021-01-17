@@ -20,7 +20,7 @@ import java.util.*;
 @Service
 public class FrontDeskService {
 
-    private String defaultPic = "";
+    private String defaultPic = "http://localhost:8080/avatars/defaultAvatar.jpg";
 
     @Autowired
     private StaffInfoMapper staffInfoMapper;
@@ -83,6 +83,7 @@ public class FrontDeskService {
             }
         }
         staffInfo.setStaffAge(age);
+        staffInfo.setStaffPic(defaultPic);
         if (staffInfo.getStaffPic() == null) staffInfo.setStaffPic(defaultPic);
         int i = staffInfoMapper.addStaff(staffInfo);
         if (i == 1) map.put("status", 1);

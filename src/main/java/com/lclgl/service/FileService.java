@@ -231,4 +231,28 @@ public class FileService {
         return new File(path).getAbsolutePath();
     }
 
+    public Map<String, Object> modifyAvatar(MultipartFile file, int staffId) {
+        HashMap<String, Object> map = new HashMap<>();
+        String path = "static/avatars/" + staffId;
+        path = new File(path).getAbsolutePath();
+        File avatarDir = new File(path);
+        if (!avatarDir.exists()) {
+            avatarDir.mkdirs();
+        }
+        File avatar = new File(path, file.getOriginalFilename());
+        try {
+            file.transferTo(avatar);
+            HashMap<String, Object> updateInfo = new HashMap<>();
+            updateInfo.put("avatar", "http:localhost:8080/avatars/" + staffId + "/" + file.getOriginalFilename());
+            updateInfo.put("staffId", staffId);
+            int r = staffInfoMapper.updateAvatar(updateInfo);
+            if (r == 1) map.put("msg", "上传头像到服务器成功！");
+            else map.put("msg", "上传头像到服务器失败！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            map.put("msg", "上传头像到服务器失败！");
+        }
+        return map;
+    }
+
 }

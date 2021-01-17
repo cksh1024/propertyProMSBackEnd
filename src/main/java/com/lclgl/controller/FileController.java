@@ -117,4 +117,15 @@ public class FileController {
         return fileService.mkpro(file, new File("项目列表/" + proName + "/").getAbsolutePath());
     }
 
+    @PostMapping("/modifyAvatar")
+    public Map<String, Object> modifyAvatar(MultipartFile file, HttpSession session) {
+        if (session.getAttribute("staffId") == null) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("msg", "你没有权限！");
+            System.out.println(map);
+            return map;
+        }
+        return fileService.modifyAvatar(file, (int) session.getAttribute("staffId"));
+    }
+
 }

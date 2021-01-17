@@ -1,11 +1,9 @@
 package com.lclgl.service;
 
-import com.lclgl.dao.AuditMapper;
-import com.lclgl.dao.LoginMapper;
-import com.lclgl.dao.StaffInfoMapper;
-import com.lclgl.dao.TeamMapper;
+import com.lclgl.dao.*;
 import com.lclgl.pojo.AuditInfo;
 import com.lclgl.pojo.StaffInfo;
+import com.lclgl.pojo.StatusLevel;
 import com.lclgl.pojo.User;
 import org.omg.CosNaming.IstringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,8 @@ public class StaffService {
     private LoginMapper loginMapper;
     @Autowired
     private TeamMapper teamMapper;
+    @Autowired
+    StatusLevelMapper statusLevelMapper;
 
     public List<Map<String,Object>> StaffInfoList(){
 
@@ -208,4 +208,32 @@ public class StaffService {
         return map;
 
     }
+
+    public Map<String, Object> getStaff(int staffId) {
+        HashMap<String, Object> map = new HashMap<>();
+        StaffInfo staff = staffInfoMapper.getStaff(staffId);
+        HashMap<String, Object> temp = new HashMap<>();
+        temp.put("userId", staff.getUserId());
+        StatusLevel statusLevel = statusLevelMapper.getStatusLevelById(staff.getStatusId());
+        temp.put("statusType", statusLevel.getStatusType());
+        temp.put("statusId", staff.getStatusId());
+        temp.put("staffSex", staff.getStaffSex());
+        temp.put("staffAge", staff.getStaffAge());
+        temp.put("staffName", staff.getStaffName());
+        temp.put("staffPic", staff.getStaffPic());
+        temp.put("staffPhone", staff.getStaffPhone());
+        temp.put("staffQq", staff.getStaffQq());
+        temp.put("staffEmail", staff.getStaffEmail());
+        temp.put("staffIdnum", staff.getStaffIdnum());
+        temp.put("staffNaplace", staff.getStaffNaplace());
+        temp.put("staffNation", staff.getStaffNation());
+        temp.put("staffBirplace", staff.getStaffBirplace());
+        temp.put("staffBirthday", staff.getStaffBirthday());
+        temp.put("staffResidence", staff.getStaffResidence());
+        temp.put("staffEdu", staff.getStaffEdu());
+        temp.put("staffJob", staff.getStaffJob());
+        map.put("staffInfo", temp);
+        return map;
+    }
+
 }
