@@ -53,10 +53,9 @@ public interface StaffInfoMapper {
 
     public int addTeamToManager(int managerId);
 
-<<<<<<< HEAD
     public int updateAvatar(Map<String, Object> map);
-=======
+
     public List<Grade> getRateDataById(int userId);
->>>>>>> 14c36264526d2c6aedabb46322fbf52d33766300
+
 
 }
