@@ -30,4 +30,9 @@
         where user_id=#{userId} and salary_time<![CDATA[>=]]>#{startTime} and salary_time<![CDATA[<=]]>#{endTime};
     </select>
 
+    <select id="getcostByMonth" resultType="int">
+        select sum(salary_practical) from salary where salary_time=#{salaryTime}
+    </select>
+
+
 </mapper>

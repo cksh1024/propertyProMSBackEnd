@@ -4,6 +4,7 @@ import com.lclgl.JsonUtils;
 import com.lclgl.pojo.Grade;
 import com.lclgl.pojo.Salary;
 import com.lclgl.service.SuperUserService;
+import javafx.beans.binding.ObjectBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -176,6 +177,16 @@ public class SuperUserController {
 
         return superUserService.setStaffEvaluate(JsonUtils.getObjList(staffEvaluate, Grade.class));
 
+    }
+
+    @PostMapping("/getCardsinfos")
+    public Map<String, Object> getCardsInfos(){
+        return superUserService.getCardsInfos();
+    }
+
+    @PostMapping("/getChartsInfos")
+    public Map<String,Object> getChartsInfos(){
+        return superUserService.getChartsInfos();
     }
 
 }

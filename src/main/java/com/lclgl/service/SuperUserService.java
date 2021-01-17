@@ -5,6 +5,7 @@ import com.lclgl.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.util.*;
 
@@ -370,5 +371,39 @@ public class SuperUserService {
         }
         return map;
 
+    }
+
+    public Map<String, Object> getCardsInfos() {
+        Map<String,Object> map=new HashMap<>();
+        map.put("staffNum",staffInfoMapper.getstaffNum());
+        map.put("CurrentPros",proInfoMapper.getCurrentProjects());
+        map.put("FinishedPros",proInfoMapper.getFinishedProjects());
+        return map;
+    }
+
+    public Map<String, Object> getChartsInfos() {
+        Map<String,Object> map=new HashMap<>();
+        Map<String,Object> map1=new HashMap<>();
+        map1.put("SuperuserNum",staffInfoMapper.getstaffNumByStatus(101));
+        map1.put("FrontNum",staffInfoMapper.getstaffNumByStatus(102));
+        map1.put("Manager",staffInfoMapper.getstaffNumByStatus(103)+staffInfoMapper.getstaffNumByStatus(104)+staffInfoMapper.getstaffNumByStatus(105));
+        map1.put("OldHand",staffInfoMapper.getstaffNumByStatus(106));
+        map1.put("NewHand",staffInfoMapper.getstaffNumByStatus(107));
+        map.put("RoundChart",map1);
+        Map<String,Object> map2=new HashMap<>();
+        map2.put("Jan",salaryMapper.getcostByMonth("2020-01-31"));
+        map2.put("Feb",salaryMapper.getcostByMonth("2020-02-29"));
+        map2.put("Mar",salaryMapper.getcostByMonth("2020-03-31"));
+        map2.put("Apri",salaryMapper.getcostByMonth("2020-04-30"));
+        map2.put("May",salaryMapper.getcostByMonth("2020-05-31"));
+        map2.put("Jane",salaryMapper.getcostByMonth("2020-06-30"));
+        map2.put("July",salaryMapper.getcostByMonth("2020-07-31"));
+        map2.put("Aug",salaryMapper.getcostByMonth("2020-08-31"));
+        map2.put("Sep",salaryMapper.getcostByMonth("2020-09-30"));
+        map2.put("Oct",salaryMapper.getcostByMonth("2020-10-31"));
+        map2.put("Nov",salaryMapper.getcostByMonth("2020-11-30"));
+        map2.put("Dec",salaryMapper.getcostByMonth("2020-12-31"));
+        map.put("CostChart",map2);
+        return map;
     }
 }

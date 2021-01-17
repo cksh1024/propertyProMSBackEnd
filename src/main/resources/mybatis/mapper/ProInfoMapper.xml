@@ -74,4 +74,12 @@
         (select pro_endtime from pro_info where pro_id=p.pro_id)<![CDATA[<=]]>#{endTime}
     </select>
 
+    <select id="getCurrentProjects" resultType="int">
+        select count(*) from pro_info where pro_condition !='已完成'
+    </select>
+
+    <select id="getFinishedProjects" resultType="int">
+        select count(*) from pro_info where pro_condition = '已完成'
+    </select>
+
 </mapper>
