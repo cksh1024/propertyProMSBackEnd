@@ -23,4 +23,6 @@ public interface SalaryMapper {
 
     public Salary getSalaryByIdAndTime(Map<String, Object> map);
 
+    public List<Salary> getSalaryById(int userId);
+
 }

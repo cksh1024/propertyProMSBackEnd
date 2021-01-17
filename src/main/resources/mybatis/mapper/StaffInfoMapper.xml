@@ -96,4 +96,8 @@
         where user_id=#{staffId}
     </update>
 
+    <select id="getRateDataById" resultType="Grade">
+        select * from grade where user_id=#{userId}
+    </select>
+
 </mapper>

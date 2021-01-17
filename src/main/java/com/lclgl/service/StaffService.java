@@ -1,7 +1,13 @@
 package com.lclgl.service;
 
 import com.lclgl.dao.*;
+import com.lclgl.dao.AuditMapper;
+import com.lclgl.dao.SalaryMapper;
+import com.lclgl.dao.StaffInfoMapper;
+import com.lclgl.dao.TeamMapper;
 import com.lclgl.pojo.AuditInfo;
+import com.lclgl.pojo.Grade;
+import com.lclgl.pojo.Salary;
 import com.lclgl.pojo.StaffInfo;
 import com.lclgl.pojo.StatusLevel;
 import com.lclgl.pojo.User;
@@ -32,6 +38,9 @@ public class StaffService {
     private TeamMapper teamMapper;
     @Autowired
     StatusLevelMapper statusLevelMapper;
+
+    @Autowired
+    private SalaryMapper salaryMapper;
 
     public List<Map<String,Object>> StaffInfoList(){
 
@@ -236,4 +245,35 @@ public class StaffService {
         return map;
     }
 
+    public Map<String, Object> getRateDataById(int staffId) {
+        List<Grade> grades=new ArrayList<>();
+        grades=staffInfoMapper.getRateDataById(staffId);
+        List<Map<String,Object>> maps=new ArrayList<>();
+        for (int i=0;i<grades.size();i++){
+            HashMap<String,Object> map=new HashMap<>();
+            map.put("gradeLevel",grades.get(i).getGradeLevel());
+            map.put("gradeYear",grades.get(i).getGradeTime().getYear()+1900);
+            map.put("gradeMonth",grades.get(i).getGradeTime().getMonth()+1);
+            maps.add(map);
+        }
+        HashMap map1=new HashMap();
+        map1.put("RateData",maps);
+        return map1;
+    }
+
+    public Map<String, Object> getSalaryDataById(int staffId) {
+        List<Salary> salaries=new ArrayList<>();
+        salaries=salaryMapper.getSalaryById(staffId);
+        List<Map<String,Object>> maps=new ArrayList<>();
+        for (int i=0;i<salaries.size();i++){
+            HashMap<String,Object> map=new HashMap<>();
+            map.put("salaryMonth",salaries.get(i).getSalaryTime().getMonth()+1);
+            map.put("salaryYear",salaries.get(i).getSalaryTime().getYear()+1900);
+            map.put("salary",salaries.get(i).getSalaryPractical());
+            maps.add(map);
+        }
+        HashMap map1=new HashMap();
+        map1.put("SalaryData",maps);
+        return map1;
+    }
 }
