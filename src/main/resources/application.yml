@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: "root"
-    password: "212575375ljy"
+    password: "cksh20000817"
     url: jdbc:mysql://localhost:3306/property_pro_ms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
